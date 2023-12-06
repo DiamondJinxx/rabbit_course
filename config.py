@@ -1,5 +1,9 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+QUEUE_NAME = "q_email_notifications"
+EXCHANGE_NAME = "x_email"
+EXCHANGE_TYPE = "direct"
+
 ENV_FILES = ("dev.env",)
 
 class RMQSettings(BaseSettings):

@@ -3,7 +3,6 @@ import socket
 
 from config import rmq_config
 
-print(socket.gethostbyname(""))
 
 params = pika.ConnectionParameters(
     host=rmq_config.HOST,
