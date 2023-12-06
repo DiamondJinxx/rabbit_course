@@ -1,6 +1,5 @@
 import sys, os
 import pika 
-import logging
 
 from config import (
     rmq_config,
@@ -9,8 +8,6 @@ from config import (
     QUEUE_NAME
 )
 
-
-logger = logging.getLogger(__name__)
 
 params = pika.ConnectionParameters(
     host=rmq_config.HOST,
@@ -21,9 +18,10 @@ params = pika.ConnectionParameters(
     )
 )
 
+print("start connection")
 connection = pika.BlockingConnection(params)
 channel = connection.channel()
-logger.info("[+] Connection over chanel established")
+print("[+] Connection over chanel established")
 
 # check queue exists
 channel.queue_declare(QUEUE_NAME)
@@ -34,7 +32,7 @@ def on_message(
     properties,
     msg
 ) -> None:
-    logger.info(f"[+] Message recieved: {msg}")
+    print(f"[+] Message recieved: {msg}")
     channel.basic_ack(delivery_tag=method.delivery_tag)
 
 channel.basic_consume(

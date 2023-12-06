@@ -1,5 +1,4 @@
 import pika 
-import logging
 
 from config import (
     rmq_config,
@@ -8,7 +7,6 @@ from config import (
     QUEUE_NAME
 )
 
-logger = logging.getLogger(__name__)
 
 params = pika.ConnectionParameters(
     host=rmq_config.HOST,
@@ -21,7 +19,7 @@ params = pika.ConnectionParameters(
 
 connection = pika.BlockingConnection(params)
 channel = connection.channel()
-logger.info("[+] Connection over chanel established")
+print("[+] Connection over chanel established")
 
 channel.exchange_declare(EXCHANGE_NAME, EXCHANGE_TYPE)
 channel.queue_declare(QUEUE_NAME)
@@ -45,7 +43,7 @@ def send_to_queue(
         routing_key=routing_key,
         body=msg
     )
-    logger.info(f"[+] Message sent to queue {msg}")
+    print(f"[+] Message sent to queue {msg}")
 
 
 send_to_queue(
@@ -77,7 +75,7 @@ send_to_queue(
 
 try:
     channel.close()
-    logger.info("[+] Connection closed")
+    print("[+] Connection closed")
 except Exception as exc:
     logger.error(f"[-] Error during channel close {exc}")
 
