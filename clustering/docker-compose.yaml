@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  rabbit-web-6-1:
+    image: rabbitmq-web-6
+    hostname: rabbit1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5674:5672
+      - 15674:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  rabbit-web-6-2:
+    image: rabbitmq-web-6
+    hostname: rabbit2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5675:5672
+      - 15675:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
