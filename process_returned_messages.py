@@ -1,5 +1,4 @@
 import pika
-import socket
 
 from config import rmq_config
 
@@ -24,11 +23,11 @@ def on_message(
     body
 ) -> None:
     """ custom message handler """
-    if method.redilivered:
+    if method.redelivered:
         print(f"{method.delivery_tag} {body.decode('utf-8')}, Redilivered")
     else:
+        print(f"nack for msg {method.delivery_tag}")
         channel.basic_nack(method.delivery_tag, requeue=True)
-
 
 channel.basic_qos(prefetch_count=3)
 consume_tag = channel.basic_consume(
